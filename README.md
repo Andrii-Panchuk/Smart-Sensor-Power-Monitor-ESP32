@@ -112,3 +112,15 @@ flowchart LR
     L --> NVS[(NVS Flash<br/>event journal)]
     U -- history command --> NVS
 ```
+
+### Tasks
+
+| Task | Priority | Stack | Responsibility |
+|------|----------|-------|----------------|
+| `sensors` | 5 | 4096 | Reads INA219 (voltage, current, power) with a fixed period (`vTaskDelayUntil`), reads both DS18B20 sensors at a slower period, publishes every sample |
+| `thresholds` | 4 | 3072 | Checks each sample for over-current, over-voltage, under-voltage and over-temperature; drives the status LEDs; emits an event when a fault starts |
+| `logger` | 4 | 4096 | Writes a boot record with the reset reason, then stores every event from the queue in the journal |
+| `uart` | 3 | 4096 | Command line over UART; streams telemetry while streaming is on |
+| `display` | 2 | 4096 | Redraws the OLED with the latest sample |
+
+Sampling and fault detection have the highest priorities, the display the lowest.
