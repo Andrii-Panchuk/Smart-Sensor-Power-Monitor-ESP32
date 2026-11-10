@@ -67,7 +67,7 @@ void event_log_add(const event_record_t *ev)
     xSemaphoreGive(s_mutex);
 
     if (err != ESP_OK) {
-        ESP_LOGE(TAG, "Помилка збереження: %s", esp_err_to_name(err));
+        ESP_LOGE(TAG, "Failed to save: %s", esp_err_to_name(err));
     }
 }
 
@@ -101,10 +101,8 @@ void event_log_print_history(void)
     for (uint32_t i = 0; i < copy.count; i++) {
         const event_record_t *e = &copy.items[(start + i) % EVENT_LOG_MAX];
 
-        // Друкуємо перші два стовпчики: порядковий номер та час
         printf("%-4" PRIu32 " | %-10" PRIu32 " | ", i + 1, e->timestamp_ms);
 
-        // Друкуємо тип події та її значення (вирівнювання за шириною)
         switch (e->type) {
             case EVENT_SYS_RESET:
                 printf("%-15s | %-20s\n", "RESET", reset_name(e->value));
