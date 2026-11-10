@@ -32,4 +32,8 @@ these reasons:
   that covers the event journal requirement (>= 100 records) without any
   external memory, which also simplified the PCB.
 
+<p align="center">
+  <img src="docs/prototype.jpg" alt="Smart Sensor & Power Monitor prototype on a perfboard: ESP32, INA219 module, SH1106 OLED, status LEDs" width="600">
+</p>
+<p align="center"><em>Prototype on a perfboard: ESP32 DevKit, INA219, SH1106 OLED, two DS18B20 and status LEDs.</em></p>
   
