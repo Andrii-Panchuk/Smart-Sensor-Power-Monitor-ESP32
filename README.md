@@ -36,4 +36,14 @@ these reasons:
   <img src="docs/prototype.jpg" alt="Smart Sensor & Power Monitor prototype on a perfboard: ESP32, INA219 module, SH1106 OLED, status LEDs" width="600">
 </p>
 <p align="center"><em>Prototype on a perfboard: ESP32 DevKit, INA219, SH1106 OLED, two DS18B20 and status LEDs.</em></p>
-  
+
+## Code structure
+
+main/
+├── main.c # app_main: initialisation and task creation
+├── config.h # pins, sampling rate, thresholds, log size
+├── types.h # shared data structures
+├── hardware.c/.h # init and access to INA219, DS18B20, SH1106 (LVGL), LEDs
+├── tasks.c/.h # FreeRTOS tasks: sensors, thresholds, logger, uart, display
+├── event_log.c/.h # event journal in Flash
+└── idf_component.yml # external dependencies
