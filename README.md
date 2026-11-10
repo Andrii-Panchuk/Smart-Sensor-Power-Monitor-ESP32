@@ -124,3 +124,37 @@ flowchart LR
 | `display` | 2 | 4096 | Redraws the OLED with the latest sample |
 
 Sampling and fault detection have the highest priorities, the display the lowest.
+
+### Data exchange
+
+- **Latest-sample snapshot:** a shared `telemetry_data_t` protected by a mutex. `sensors` writes it; `display` and `uart` copy it under the mutex and do all formatting and drawing outside the critical section.
+- **`sensor_queue`** (10 samples): `sensors` -> `thresholds`. Every sample is checked. The sender uses a zero timeout, so a slow consumer can never block sampling.
+- **`event_queue`** (20 events): `thresholds` -> `logger`. Flash writes are slow, so they are kept out of the sampling and fault-detection path.
+
+### Design notes
+
+- **Integer units in shared data:** mV, µA, µW and temperature × 100. Conversion to floating point happens only when printing.
+- **Non-blocking temperature reads:** a DS18B20 conversion takes time, so the task only triggers it and collects the result on the next temperature period instead of waiting.
+- **Edge-triggered events:** an event is recorded once when a fault begins, not on every sample while it lasts. The flag is cleared when the value returns to normal.
+- **Reset reason in the journal:** every boot adds a record with the reset reason (power-on, software, panic, watchdog, brownout), which helps with diagnosing unexpected restarts.
+
+## Event journal
+
+Each record contains a timestamp (ms since boot), an event type and a value:
+
+| Event | Value |
+|-------|-------|
+| `RESET` | reset reason |
+| `OVER_CURRENT` | mA |
+| `OVER_VOLTAGE`, `UNDER_VOLTAGE` | mV |
+| `OVER_TEMP` | °C |
+
+Records are kept in a ring buffer of `EVENT_LOG_MAX` entries. The whole buffer is stored as one blob in NVS (namespace `monitor`, key `events`) and committed after every event, so the journal survives reboots and power loss. On startup the blob is validated (size, record count, head index) and cleared if it is invalid. Access is protected by a mutex.
+
+## UART commands
+
+| Command | Action |
+|---------|--------|
+| `history` | Print the event journal |
+| `stream on` | Start printing telemetry (see format above) |
+| `stream off` | Stop printing telemetry |
