@@ -87,3 +87,28 @@ telemetry) is my own code.
 | [`espressif/esp_lvgl_port`](https://components.espressif.com/components/espressif/esp_lvgl_port) | 1.4.0 | LVGL integration for ESP-IDF |
 
 Each component keeps its own license; see the component pages above.
+
+## Build and flash
+
+Requires ESP-IDF v6.1 with the environment set up (`. $IDF_PATH/export.sh`).
+
+```bash
+idf.py set-target esp32
+idf.py build
+idf.py -p <PORT> flash monitor
+```
+## Architecture
+
+The firmware runs five FreeRTOS tasks. Data flows in one direction: the
+`sensors` task samples the hardware, and everything else consumes its output.
+
+```mermaid
+flowchart LR
+    S[sensors<br/>INA219 + DS18B20] -- mutex-protected<br/>latest sample --> D[display<br/>OLED]
+    S -- mutex-protected<br/>latest sample --> U[uart<br/>telemetry + commands]
+    S -- sensor_queue --> T[thresholds<br/>fault checks]
+    T --> LED[Status LEDs]
+    T -- event_queue --> L[logger]
+    L --> NVS[(NVS Flash<br/>event journal)]
+    U -- history command --> NVS
+```
