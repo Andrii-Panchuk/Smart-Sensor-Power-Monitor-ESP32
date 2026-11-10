@@ -4,7 +4,7 @@ Prototype of a universal embedded module for monitoring the power and
 state of a small electronic system. Built on **ESP32** with **ESP-IDF and
 FreeRTOS**, it measures voltage, current and temperature, calculates power
 and accumulated energy, raises a warning when thresholds are exceeded,
-keeps an event journal in Flash and streams telemetry to a host PC and LCD display.
+keeps an event journal in Flash and streams telemetry to a host PC and OLED display.
 
 ## About the project
 
@@ -48,3 +48,21 @@ these reasons:
 | `main/tasks.c`, `tasks.h` | FreeRTOS tasks: sensors, thresholds, logger, UART, display |
 | `main/event_log.c`, `event_log.h` | Event journal in Flash |
 | `main/idf_component.yml` | External dependencies |
+
+## Features
+
+- **Measurement:** bus voltage, current and power from an INA219 over I²C, and temperature from two DS18B20 sensors over 1-Wire.
+- **Fault detection:** values are compared with configurable thresholds on a violation the firmware raises a warning and switches the status LED.
+- **Event journal:** warnings are stored with a timestamp in the ESP32's on-chip Flash, up to 200 records.
+- **Local display:** live voltage, current, power and the temperature of both sensors on an SH1106 OLED, drawn with LVGL.
+## Telemetry format
+
+Each sample is printed as one line:
+
+| timestamp_ms | voltage_V | current_mA | power_mW | temp_right_C | temp_left_C |
+|---|---|---|---|---|---|
+
+```
+36291      |      4.990 |        44.04 |     219.73 |     22.44 |     24.19
+37291      |      4.990 |        43.49 |     216.06 |     22.44 |     24.19
+```
