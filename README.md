@@ -158,3 +158,19 @@ Records are kept in a ring buffer of `EVENT_LOG_MAX` entries. The whole buffer i
 | `history` | Print the event journal |
 | `stream on` | Start printing telemetry (see format above) |
 | `stream off` | Stop printing telemetry |
+
+## Known limitations
+
+This is the firmware as built in about two days at the hackathon. Known
+limitations of this version:
+
+**Hardware**
+- The PTC fuse is not soldered in the prototype, so overcurrent protection
+  was not tested on hardware (the warning and event log were).
+- The prototype is built on a perfboard; a PCB was designed but not
+  manufactured.
+
+**Features**
+- Telemetry over Wi-Fi was planned but not implemented.
+- Thresholds are compile-time constants in `config.h`; they cannot be changed from the host at runtime.
+- The UART command set is minimal (`history`, `stream on`, `stream off`).
