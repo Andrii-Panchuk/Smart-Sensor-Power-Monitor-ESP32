@@ -186,11 +186,7 @@ static void handle_command(const char *cmd)
         s_stream_last = xTaskGetTickCount() - pdMS_TO_TICKS(STREAM_PERIOD_MS);
     } else if (strcmp(cmd, "stream off") == 0) {
         s_streaming = false;
-        printf("Потік зупинено\n");
-    } /*else {
-        printf("Невідома команда: %s\n", cmd);
-        print_commands();
-    }*/
+    }
 }
 
 static void task_uart(void *arg)
