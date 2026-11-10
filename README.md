@@ -39,11 +39,12 @@ these reasons:
 
 ## Code structure
 
-main/
-├── main.c # app_main: initialisation and task creation
-├── config.h # pins, sampling rate, thresholds, log size
-├── types.h # shared data structures
-├── hardware.c/.h # init and access to INA219, DS18B20, SH1106 (LVGL), LEDs
-├── tasks.c/.h # FreeRTOS tasks: sensors, thresholds, logger, uart, display
-├── event_log.c/.h # event journal in Flash
-└── idf_component.yml # external dependencies
+| File | Purpose |
+|------|---------|
+| `main/main.c` | `app_main`: initialisation and task creation |
+| `main/config.h` | Pins, sampling rate, thresholds, log size |
+| `main/types.h` | Shared data structures |
+| `main/hardware.c`, `hardware.h` | Init and access to INA219, DS18B20, SH1106 (LVGL) and LEDs |
+| `main/tasks.c`, `tasks.h` | FreeRTOS tasks: sensors, thresholds, logger, UART, display |
+| `main/event_log.c`, `event_log.h` | Event journal in Flash |
+| `main/idf_component.yml` | External dependencies |
