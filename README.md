@@ -82,8 +82,8 @@ telemetry) is my own code.
 | [`tny-robotics/ina219-esp-idf`](https://components.espressif.com/components/tny-robotics/ina219-esp-idf) | 1.0.0 | INA219 voltage/current sensor (I²C) |
 | [`tny-robotics/sh1106-esp-idf`](https://components.espressif.com/components/tny-robotics/sh1106-esp-idf) | 1.0.2 | SH1106 OLED driver |
 | [`espressif/ds18b20`](https://components.espressif.com/components/espressif/ds18b20) | 0.4.0 | DS18B20 temperature sensors |
-| [`espressif/onewire_bus`](https://components.espressif.com/components/espressif/onewire_bus) | 1.0.0 | 1-Wire bus for DS18B20 |
-| [`lvgl/lvgl`](https://components.espressif.com/components/lvgl/lvgl) | 1.0.0 | Graphics library for the OLED |
-| [`espressif/esp_lvgl_port`](https://components.espressif.com/components/espressif/esp_lvgl_port) | 1.0.0 | LVGL integration for ESP-IDF |
+| [`espressif/onewire_bus`](https://components.espressif.com/components/espressif/onewire_bus) | 1.1.2 | 1-Wire bus for DS18B20 |
+| [`lvgl/lvgl`](https://components.espressif.com/components/lvgl/lvgl) | 8.4.0 | Graphics library for the OLED |
+| [`espressif/esp_lvgl_port`](https://components.espressif.com/components/espressif/esp_lvgl_port) | 1.4.0 | LVGL integration for ESP-IDF |
 
 Each component keeps its own license; see the component pages above.
