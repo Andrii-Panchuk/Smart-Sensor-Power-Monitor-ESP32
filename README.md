@@ -66,3 +66,24 @@ Each sample is printed as one line:
 36291      |      4.990 |        44.04 |     219.73 |     22.44 |     24.19
 37291      |      4.990 |        43.49 |     216.06 |     22.44 |     24.19
 ```
+
+## Dependencies
+
+Built with **ESP-IDF v6.1**
+
+All device drivers are third-party components. They are declared in
+`main/idf_component.yml` and downloaded automatically by the IDF Component
+Manager during the first build, so nothing needs to be installed by hand.
+The application logic in `main/` (tasks, thresholds, event journal,
+telemetry) is my own code.
+
+| Component | Version | Used for |
+|-----------|---------|----------|
+| [`tny-robotics/ina219-esp-idf`](https://components.espressif.com/components/tny-robotics/ina219-esp-idf) | TODO | INA219 voltage/current sensor (I²C) |
+| [`tny-robotics/sh1106-esp-idf`](https://components.espressif.com/components/tny-robotics/sh1106-esp-idf) | TODO | SH1106 OLED driver |
+| [`espressif/ds18b20`](https://components.espressif.com/components/espressif/ds18b20) | TODO | DS18B20 temperature sensors |
+| [`espressif/onewire_bus`](https://components.espressif.com/components/espressif/onewire_bus) | TODO | 1-Wire bus for DS18B20 |
+| [`lvgl/lvgl`](https://components.espressif.com/components/lvgl/lvgl) | TODO | Graphics library for the OLED |
+| [`espressif/esp_lvgl_port`](https://components.espressif.com/components/espressif/esp_lvgl_port) | TODO | LVGL integration for ESP-IDF |
+
+Each component keeps its own license; see the component pages above.
